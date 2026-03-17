@@ -34,7 +34,7 @@ SCROLL_COUNT: int = 2          # Number of page scrolls on the search results pa
 # Mobile emulation
 # ---------------------------------------------------------------------------
 # Any device name listed in Chrome DevTools' device list is valid here.
-# Examples: "iPhone X", "Pixel 5", "Galaxy S9+", "iPad Pro"
+# Examples: "iPhone X", "Pixel 7", "Galaxy S9+", "iPhone 14 Pro Max"
 MOBILE_DEVICE_NAME: str = os.getenv("MOBILE_DEVICE", "iPhone X")
 
 # ---------------------------------------------------------------------------

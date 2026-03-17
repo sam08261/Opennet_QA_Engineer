@@ -82,7 +82,7 @@ pytest
 ### Run with a different mobile device
 
 ```bash
-pytest --device "Pixel 5"
+pytest --device "Pixel 7"
 pytest --device "Galaxy S9+"
 ```
 
