@@ -32,9 +32,6 @@ class HomePage(BasePage):
     _COOKIE_ACCEPT = (By.CSS_SELECTOR, "button[data-a-target='consent-banner-accept']")
     _COOKIE_DECLINE = (By.CSS_SELECTOR, "button[data-a-target='consent-banner-decline']")
 
-    # "Open in App" top banner — can overlap nav elements
-    _OPEN_IN_APP_BANNER = (By.CSS_SELECTOR, "a[href*='top_nav_open_in_app'], [data-a-target='open-app-banner-dismiss']")
-
     # Bottom nav "Browse" tab — this is the search entry point on mobile Twitch
     _BROWSE_TAB = (By.CSS_SELECTOR, "a[href='/directory']")
     # Fallback: any bottom-nav link containing "Browse" text
@@ -72,8 +69,10 @@ class HomePage(BasePage):
         """
         logger.info("Clicking Browse tab (search entry point for mobile)")
 
-        # Dismiss open-in-app banner first so it doesn't block the nav
-        self.try_dismiss(self._OPEN_IN_APP_BANNER, timeout=4)
+        # Dismiss open-in-app banner first so it doesn't block the nav.
+        # Ensure we only interact with the CLOSE button, not the banner body!
+        _DISMISS_BTN = (By.CSS_SELECTOR, "button[data-a-target='open-app-banner-dismiss'], .open-app-banner button[aria-label='Close']")
+        self.try_dismiss(_DISMISS_BTN, timeout=4)
 
         if self.is_present(self._BROWSE_TAB, timeout=8):
             self.js_click(self._BROWSE_TAB)

@@ -67,8 +67,9 @@ class SearchPage(BasePage):
         time.sleep(2)
 
         # Dismiss "Open in App" banner if it appears here to prevent accidental clicks
-        _OPEN_IN_APP_BANNER = (By.CSS_SELECTOR, "a[href*='top_nav_open_in_app'], [data-a-target='open-app-banner-dismiss']")
-        self.try_dismiss(_OPEN_IN_APP_BANNER, timeout=3)
+        # Ensure we only interact with the CLOSE button, not the banner body!
+        _DISMISS_BTN = (By.CSS_SELECTOR, "button[data-a-target='open-app-banner-dismiss'], .open-app-banner button[aria-label='Close']")
+        self.try_dismiss(_DISMISS_BTN, timeout=3)
 
         # Try selectors in order; click element first to focus it, then type
         search_input = None
