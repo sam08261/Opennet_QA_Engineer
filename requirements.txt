@@ -1,0 +1,14 @@
+# WAP Test Framework — Python dependencies
+#
+# Install with:  pip install -r requirements.txt
+
+# ── Selenium & WebDriver ────────────────────────────────────────────────────
+selenium>=4.18.0
+webdriver-manager>=4.0.0
+
+# ── Test runner & reporting ─────────────────────────────────────────────────
+pytest>=8.0.0
+pytest-html>=4.1.1        # HTML test report generation
+
+# ── Optional but recommended ────────────────────────────────────────────────
+pytest-xdist>=3.5.0       # Run tests in parallel with -n auto
