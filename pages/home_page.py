@@ -67,10 +67,10 @@ class HomePage(BasePage):
         bottom navigation bar (href="/directory"), which hosts the search input.
         Falls back to direct URL navigation if the tab element is not found.
         """
-        logger.info("Clicking Browse tab (search entry point for mobile)")
+        logger.info("Clicking Browse tab to trigger search overlay (mobile)")
 
-        # Dismiss open-in-app banner first so it doesn't block the nav.
-        # Ensure we only interact with the CLOSE button, not the banner body!
+        # Dismiss open-in-app banner if present so it doesn't block the nav.
+        # Target the CLOSE button specifically.
         _DISMISS_BTN = (By.CSS_SELECTOR, "button[data-a-target='open-app-banner-dismiss'], .open-app-banner button[aria-label='Close']")
         self.try_dismiss(_DISMISS_BTN, timeout=4)
 

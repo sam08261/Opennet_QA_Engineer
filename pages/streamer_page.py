@@ -59,8 +59,8 @@ class StreamerPage(BasePage):
         """
         Wait for meaningful page content to be visible.
 
-        Strategy: wait for *any* of the known content signals to appear,
-        then add a short stabilisation sleep for assets (video, images) to settle.
+        Waits for known content signals to appear,
+        then adds a short delay for asset stabilization.
         """
         logger.info("Waiting for streamer page to load …")
 

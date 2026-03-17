@@ -4,10 +4,9 @@ Search Page Object — Twitch /directory (Browse & Search)
 Handles query input, result scrolling, and streamer selection.
 
 NOTE: On Twitch mobile the search lives at /directory.
-- The search input uses class `tw-input` (confirmed by live DOM inspection)
-- Search results are `button.tw-link` elements (not anchor tags)
-- We can optionally click the "Channels" tab (a[href*='type=channels'])
-  to filter results to live streamers only.
+- The search input uses class `tw-input`.
+- Search results are `button.tw-link` elements.
+- The "Channels" tab (a[href*='type=channels']) filters results to live streamers.
 """
 
 from __future__ import annotations
@@ -30,7 +29,7 @@ class SearchPage(BasePage):
     # ------------------------------------------------------------------
     # Locators
     # ------------------------------------------------------------------
-    # Search input — confirmed by live DOM inspection on m.twitch.tv/directory
+    # Search input
     _SEARCH_INPUT = (By.CSS_SELECTOR, "input.tw-input")
     _SEARCH_INPUT_ALT2 = (By.CSS_SELECTOR, "input[data-a-target='tw-input']")
     _SEARCH_INPUT_ALT3 = (By.CSS_SELECTOR, "input[type='search']")
@@ -39,11 +38,11 @@ class SearchPage(BasePage):
     _CHANNELS_TAB = (By.CSS_SELECTOR, "a[href*='type=channels']")
     _CHANNELS_TAB_ALT = (By.XPATH, "//a[contains(@href, 'type=channel')]")
 
-    # Streamer result items — confirmed as button.tw-link on mobile Twitch
+    # Streamer result items
     _STREAMER_CARD = (By.CSS_SELECTOR, "button.tw-link")
-    # Broader fallback: any ScCoreLink button
+    # Broader fallback
     _STREAMER_CARD_ALT = (By.CSS_SELECTOR, "button[class*='ScCoreLink'], button[class*='tw-link']")
-    # Anchor fallback for alternate page layouts
+    # Anchor fallback for alternate layouts
     _STREAMER_CARD_ANCHOR = (By.CSS_SELECTOR, "a[data-a-target='preview-card-image-link'], a[data-a-target='preview-card-channel-link']")
 
     # ------------------------------------------------------------------
@@ -66,8 +65,8 @@ class SearchPage(BasePage):
         self.open(f"{config.BASE_URL}/directory")
         time.sleep(2)
 
-        # Dismiss "Open in App" banner if it appears here to prevent accidental clicks
-        # Ensure we only interact with the CLOSE button, not the banner body!
+        # Dismiss "Open in App" banner if present to prevent accidental clicks.
+        # Target the CLOSE button specifically.
         _DISMISS_BTN = (By.CSS_SELECTOR, "button[data-a-target='open-app-banner-dismiss'], .open-app-banner button[aria-label='Close']")
         self.try_dismiss(_DISMISS_BTN, timeout=3)
 
@@ -87,7 +86,7 @@ class SearchPage(BasePage):
             time.sleep(3)
             return
 
-        # Use JS click to avoid accidentally clicking overlapping Open App banners
+        # Use JS click to bypass overlapping banners.
         self.driver.execute_script("arguments[0].click();", search_input)
         time.sleep(0.5)
         search_input.clear()

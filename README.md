@@ -1,6 +1,6 @@
 # Opennet QA Engineer — WAP Test Framework
 
-A scalable, maintainable **Selenium + pytest** test framework for validating Twitch's mobile web experience (WAP). Built with the Page Object Model pattern and Chrome's built-in mobile emulation.
+A scalable, maintainable **Selenium + pytest** test framework I built for validating Twitch's mobile web experience (WAP). I designed this with the Page Object Model pattern and Chrome's built-in mobile emulation to ensure long-term maintainability.
 
 ---
 
@@ -128,22 +128,22 @@ xdg-open reports/report.html  # Linux
 
 ## 🏗️ Framework Design
 
-### Why Page Object Model?
+### Why I chose the Page Object Model
 
-- **Maintainability**: UI changes require editing a single page class, not every test
-- **Readability**: Tests read like plain English — `home.click_search_icon()`
-- **Scalability**: New test scenarios reuse existing page objects
+- **Maintainability**: When the UI changes, I only need to edit a single page class rather than updating every individual test.
+- **Readability**: My tests read like plain English — e.g., `home.click_search_icon()`.
+- **Scalability**: New test scenarios I write can seamlessly reuse my existing page objects.
 
-### Key design decisions
+### My key design decisions
 
 | Decision | Rationale |
 |---|---|
-| `core/config.py` | All magic values in one place — zero config scattered across tests |
-| `DriverFactory` | Swapping browsers/devices is a one-line change, not a test rewrite |
-| `BasePage` | Shared wait logic, JS fallbacks, and safe popup dismissal available to all pages |
-| `try_dismiss()` | All popup handlers are no-ops when the element is absent — no flaky `NoSuchElement` crashes |
-| Dual locators | Primary + fallback CSS/XPath for every critical element to handle Twitch markup changes |
-| `--device` / `--headless` CLI | CI/CD friendly without code changes |
+| `core/config.py` | I centralized all magic values in one place, ensuring zero configuration is scattered across tests. |
+| `DriverFactory` | I abstracted browser creation so swapping devices is a simple one-line change rather than a test rewrite. |
+| `BasePage` | I created a shared base class to provide wait logic, robust JS fallbacks, and safe popup dismissal across all pages. |
+| `try_dismiss()` | I implemented popup handlers as no-ops when elements are absent, preventing flaky `NoSuchElement` crashes. |
+| Dual locators | I added primary and fallback CSS/XPath locators for critical elements to handle Twitch markup changes gracefully. |
+| `--device` / `--headless` CLI | I integrated CLI flags to make the framework CI/CD friendly out of the box without requiring code modifications. |
 
 ### Adding a new test scenario
 

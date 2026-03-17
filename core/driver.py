@@ -67,7 +67,7 @@ def _build_mobile_options(device_name: str, headless: bool) -> Options:
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
 
-    # Block external protocol handers (prevents App Store / native app redirects)
+    # Block external protocol handlers to prevent native application deep-linking
     prefs = {
         "protocol_handler.excluded_schemes.itms-apps": False,
         "protocol_handler.excluded_schemes.twitch": False,
