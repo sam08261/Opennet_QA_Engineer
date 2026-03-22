@@ -43,7 +43,7 @@ MOBILE_DEVICE_NAME: str = os.getenv("MOBILE_DEVICE", "iPhone X")
 DEFAULT_TIMEOUT: int = 20       # General explicit-wait ceiling
 PAGE_LOAD_TIMEOUT: int = 45     # driver.set_page_load_timeout
 POLL_FREQUENCY: float = 0.5    # How often WebDriverWait re-checks condition
-SCROLL_PAUSE: float = 0.5      # Pause between programmatic scrolls
+SCROLL_PAUSE: float = 1.0      # Pause between programmatic scrolls
 
 # ---------------------------------------------------------------------------
 # Misc

@@ -48,11 +48,12 @@ class TestTwitchWAP:
         2. Dismiss cookie/consent banner (if shown)
         3. Click the search icon
         4. Enter "StarCraft II" and submit
-        5. Scroll search results twice
-        6. Open the first streamer card
-        7. Wait for the streamer page to fully load
-        8. Dismiss any popup or modal (mature content gate, ads, etc.)
-        9. Take and save a screenshot
+        5. Switch to the Channels tab
+        6. Scroll search results twice
+        7. Open the first streamer card
+        8. Wait for the streamer page to fully load
+        9. Dismiss any popup or modal (mature content gate, ads, etc.)
+        10. Take and save a screenshot
         """
         # ── Step 1 & 2: Home page ────────────────────────────────────────
         logger.info("=== STEP 1: Navigate to Twitch ===")
@@ -69,22 +70,26 @@ class TestTwitchWAP:
         search = SearchPage(driver)
         search.type_search_query(config.SEARCH_QUERY)
 
-        # ── Step 5: Scroll ───────────────────────────────────────────────
-        logger.info("=== STEP 4: Scroll results %d time(s) ===", config.SCROLL_COUNT)
+        # ── Step 5: Channels Tab ─────────────────────────────────────────
+        logger.info("=== STEP 4: Switch to Channels tab ===")
+        search.switch_to_channels_tab()
+
+        # ── Step 6: Scroll ───────────────────────────────────────────────
+        logger.info("=== STEP 5: Scroll results %d time(s) ===", config.SCROLL_COUNT)
         search.scroll_results(config.SCROLL_COUNT)
 
-        # ── Step 6: Pick a streamer ──────────────────────────────────────
-        logger.info("=== STEP 5: Select first streamer ===")
+        # ── Step 7: Pick a streamer ──────────────────────────────────────
+        logger.info("=== STEP 6: Select first streamer ===")
         search.select_first_streamer()
 
-        # ── Step 7 & 8: Streamer page ────────────────────────────────────
-        logger.info("=== STEP 6: Wait for streamer page to load ===")
+        # ── Step 8 & 9: Streamer page ────────────────────────────────────
+        logger.info("=== STEP 7: Wait for streamer page to load ===")
         streamer = StreamerPage(driver)
         streamer.wait_until_loaded()
         streamer.dismiss_popup_if_present()
 
-        # ── Step 9: Screenshot ───────────────────────────────────────────
-        logger.info("=== STEP 6 (continued): Taking screenshot ===")
+        # ── Step 10: Screenshot ───────────────────────────────────────────
+        logger.info("=== STEP 8: Taking screenshot ===")
         screenshot_path = streamer.take_screenshot("starcraft_streamer")
 
         # Final assertions

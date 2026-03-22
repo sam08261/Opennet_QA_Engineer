@@ -104,6 +104,23 @@ class SearchPage(BasePage):
             self.open(f"{config.BASE_URL}/search?term={encoded}")
             time.sleep(3)
 
+    def switch_to_channels_tab(self) -> None:
+        """
+        Switch from the default 'Top' tab to the 'Channels' tab.
+        
+        Ensures the results display a pure vertical list of streamers rather 
+        than horizontal carousels that absorb vertical scrolls.
+        """
+        logger.info("Switching to 'Channels' tab for purely vertical results")
+        if self.is_present(self._CHANNELS_TAB, timeout=5):
+            self.click(self._CHANNELS_TAB)
+            time.sleep(1)
+        elif self.is_present(self._CHANNELS_TAB_ALT, timeout=3):
+            self.js_click(self._CHANNELS_TAB_ALT)
+            time.sleep(1)
+        else:
+            logger.warning("Could not find Channels tab — continuing on current tab")
+
     def scroll_results(self, times: int = config.SCROLL_COUNT) -> None:
         """
         Scroll the search results page down *times* times.

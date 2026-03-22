@@ -59,23 +59,33 @@ class StreamerPage(BasePage):
         """
         Wait for meaningful page content to be visible.
 
-        Waits for known content signals to appear,
-        then adds a short delay for asset stabilization.
+        Specifically waits for the video player and channel data to mount in the DOM,
+        ensuring the live stream is actually loading before continuing.
         """
         logger.info("Waiting for streamer page to load …")
 
-        # Try the most reliable signals in order
-        for locator in (self._PAGE_CONTAINER, self._CHANNEL_NAME, self._VIDEO_PLAYER):
-            if self.is_present(locator, timeout=config.DEFAULT_TIMEOUT):
-                logger.info("Page content detected via: %s", locator)
-                break
+        # 1. Wait for the core page layout container
+        if self.is_present(self._PAGE_CONTAINER, timeout=10):
+            logger.info("Page skeleton loaded")
+            
+        # 2. Wait strictly for the actual Video Player to mount
+        # (This is the most critical element to prove the stream is loading)
+        if self.is_present(self._VIDEO_PLAYER, timeout=15):
+            logger.info("Video player heavily mounted in DOM")
         else:
-            logger.warning(
-                "None of the expected page signals found — proceeding anyway"
-            )
+            logger.warning("Video player did not appear within timeout!")
 
-        # Allow lazy-loaded assets and video to settle
-        time.sleep(1)
+        # 3. Wait for the Chat Room to load
+        _CHAT_CONTAINER = (By.CSS_SELECTOR, ".scrollable-area, .chat-line__message, [data-a-target='chat-room']")
+        if self.is_present(_CHAT_CONTAINER, timeout=10):
+            logger.info("Chat room mounted in DOM")
+        else:
+            logger.warning("Chat room did not appear within timeout")
+
+        # Allow lazy-loaded assets and the actual video stream blob to settle
+        # (3 seconds is optimal here because the <video> tag appearing in DOM 
+        # doesn't mean the first frame has rendered yet).
+        time.sleep(3)
         logger.info("Streamer page considered fully loaded")
 
     def dismiss_popup_if_present(self) -> None:

@@ -4,9 +4,9 @@ A scalable, maintainable **Selenium + pytest** test framework I built for valida
 
 ---
 
-## 📹 Test Running Locally
+## 📹 Test Execution Demo
 
-> **GIF to be recorded after first local run — see [Running Tests](#running-tests) below.**
+![Test Execution Demo](./assets/demo.gif)
 
 ---
 
