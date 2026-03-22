@@ -46,7 +46,7 @@ class HomePage(BasePage):
         self.open(config.BASE_URL)
         logger.info("Twitch home page loaded")
         # Allow initial JS to render the bottom nav
-        time.sleep(2)
+        time.sleep(0.5)
 
     def dismiss_cookie_banner(self) -> None:
         """
@@ -84,4 +84,4 @@ class HomePage(BasePage):
             self.open(f"{config.BASE_URL}/directory")
 
         # Wait for the directory/search page to load
-        time.sleep(2)
+        time.sleep(0.5)

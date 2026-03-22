@@ -75,7 +75,7 @@ class StreamerPage(BasePage):
             )
 
         # Allow lazy-loaded assets and video to settle
-        time.sleep(3)
+        time.sleep(1)
         logger.info("Streamer page considered fully loaded")
 
     def dismiss_popup_if_present(self) -> None:
@@ -95,17 +95,17 @@ class StreamerPage(BasePage):
         if self.try_dismiss(self._MATURE_CONTENT_BTN, timeout=5):
             logger.info("Dismissed mature content overlay")
             popup_handled = True
-            time.sleep(1)
+            time.sleep(0.5)
 
         if self.try_dismiss(self._START_WATCHING_BTN, timeout=3):
             logger.info("Dismissed 'Start Watching' gate")
             popup_handled = True
-            time.sleep(1)
+            time.sleep(0.5)
 
         if self.try_dismiss(self._CLOSE_MODAL_BTN, timeout=3):
             logger.info("Dismissed generic modal overlay")
             popup_handled = True
-            time.sleep(1)
+            time.sleep(0.5)
 
         if self.try_dismiss(self._COOKIE_ACCEPT, timeout=3):
             logger.info("Dismissed late cookie banner on streamer page")

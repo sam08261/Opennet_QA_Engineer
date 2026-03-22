@@ -63,7 +63,7 @@ class SearchPage(BasePage):
 
         # Navigate directly to the mobile directory / search page for reliability
         self.open(f"{config.BASE_URL}/directory")
-        time.sleep(2)
+        time.sleep(0.5)
 
         # Dismiss "Open in App" banner if present to prevent accidental clicks.
         # Target the CLOSE button specifically.
@@ -83,7 +83,7 @@ class SearchPage(BasePage):
             logger.warning("Search input not found — navigating via URL")
             encoded = query.replace(" ", "+")
             self.open(f"{config.BASE_URL}/search?term={encoded}")
-            time.sleep(3)
+            time.sleep(1.5)
             return
 
         # Use JS click to bypass overlapping banners.
@@ -91,11 +91,11 @@ class SearchPage(BasePage):
         time.sleep(0.5)
         search_input.clear()
         search_input.send_keys(query)
-        time.sleep(0.5)
+        time.sleep(0.2)
         search_input.send_keys(Keys.RETURN)
 
         # Allow results to render
-        time.sleep(3)
+        time.sleep(1.5)
 
         # Fallback: if Keys.RETURN didn't trigger navigation, force URL
         if "/directory" in self.driver.current_url and "/search" not in self.driver.current_url:
@@ -145,4 +145,4 @@ class SearchPage(BasePage):
 
         # JS click avoids intercepted-click from overlapping elements
         self.driver.execute_script("arguments[0].click();", cards[0])
-        time.sleep(2)
+        time.sleep(1)
